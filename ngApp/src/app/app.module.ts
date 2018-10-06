@@ -8,9 +8,11 @@ import { LoginComponent } from './login/login.component';
 import { EventsComponent } from './events/events.component';
 import { SpecialEventsComponent } from './special-events/special-events.component';
 import { AppRoutingModule } from './app-routing.module';
-import { ShowPasswordComponent } from './shared/show-password/show-password.component';
+import { ShowPasswordComponent } from './shared/component/show-password/show-password.component';
 import { PhoneNumberDirective } from './shared/directive/phone-number.directive';
 import { PasswordStrengthMeterModule } from 'angular-password-strength-meter';
+import { CompareValidatorDirective } from './shared/validator/compare-validator.directive';
+
 
 
 @NgModule({
@@ -21,7 +23,8 @@ import { PasswordStrengthMeterModule } from 'angular-password-strength-meter';
     EventsComponent,
     SpecialEventsComponent,
     ShowPasswordComponent,
-    PhoneNumberDirective
+    PhoneNumberDirective,
+    CompareValidatorDirective
   ],
   imports: [
     BrowserModule,
