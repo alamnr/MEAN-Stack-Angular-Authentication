@@ -4,7 +4,7 @@ import { Directive, HostListener, ElementRef, Input } from '@angular/core';
 })
 export class PhoneNumberDirective {
 
-    regexStr =  '^[0-9 ()-+]*$';
+    regexStr =  '^[0-9 ()-+\t]*$';
     @Input() isPhoneNo: boolean;
 
     constructor(private el: ElementRef) { }

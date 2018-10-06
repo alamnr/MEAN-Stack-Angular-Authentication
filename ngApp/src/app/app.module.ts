@@ -13,6 +13,9 @@ import { PhoneNumberDirective } from './shared/directive/phone-number.directive'
 import { PasswordStrengthMeterModule } from 'angular-password-strength-meter';
 import { CompareValidatorDirective } from './shared/validator/compare-validator.directive';
 
+import { RecaptchaModule, RECAPTCHA_SETTINGS, RecaptchaSettings } from 'ng-recaptcha';
+import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
+
 
 
 @NgModule({
@@ -30,9 +33,11 @@ import { CompareValidatorDirective } from './shared/validator/compare-validator.
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    PasswordStrengthMeterModule
+    PasswordStrengthMeterModule,
+    RecaptchaModule.forRoot(),
+    RecaptchaFormsModule
   ],
-  providers: [PhoneNumberDirective],
+  providers: [PhoneNumberDirective, {provide:RECAPTCHA_SETTINGS,useValue:{siteKey:'6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'} as RecaptchaSettings}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -8,7 +8,7 @@ import { User } from '../model/User';
 })
 export class RegisterComponent implements OnInit {
 
-  registerUserData= new User('','',''); 
+  registerUserData= new User('','','',''); 
   showPass : boolean;
   showPassConfirm : boolean;
   passStrengthText: string;
