@@ -1,5 +1,15 @@
+
 <div class="row pt-5">
   <div class="col-md-6 mx-auto">
+<!--    
+    <div class="alert alert-dismissible fade show" role="alert" [class.d-none]="showMsgSuccess" [ngClass]="showMsgSuccess? 'alert-success':'alert-error'">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <strong *ngIf="showMsgSuccess">Successfully saved</strong> 
+        <strong *ngIf="">Failed to save</strong>
+    </div> -->
+   
     <div class="card rounded-0">
       <div class="card-header">
         <h3 class="mb-0">Register</h3>
@@ -11,35 +21,35 @@
           {{registerUserData | json}} -->
           <div class="form-group">
             <label for="">Email</label>
-            <input #emailNew="ngModel" [ngModel]="registerUserData.email" pattern="^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$"
-              [class.is-invalid]="emailNew.invalid && emailNew.touched" name="emailNew" type="email" class="form-control rounded-0"
+            <input #email="ngModel" [(ngModel)]="registerUserData.email" pattern="^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$"
+              [class.is-invalid]="email.invalid && email.touched" name="email" type="email" class="form-control rounded-0"
               required minlength="5" maxlength="20">
 
-            <div *ngIf="regForm.controls.emailNew?.invalid && (regForm.controls.emailNew?.dirty  || emailNew.touched)">
-              <small class="form-text text-danger" *ngIf="regForm.controls.emailNew?.errors?.required && emailNew.touched">
+            <div *ngIf="regForm.controls.email?.invalid && (regForm.controls.email?.dirty  || email.touched)">
+              <small class="form-text text-danger" *ngIf="regForm.controls.email?.errors?.required && email.touched">
                 Your email is required.
               </small>
-              <!-- <small class="form-text text-danger" *ngIf="regForm.controls.emailNew?.errors?.invalid">
+              <!-- <small class="form-text text-danger" *ngIf="regForm.controls.email?.errors?.invalid">
                 Your email is invalid.
               </small> -->
-              <small class="form-text text-danger" *ngIf="regForm.controls.emailNew?.errors?.minlength">
+              <small class="form-text text-danger" *ngIf="regForm.controls.email?.errors?.minlength">
                 Your email is required to be at least 5 characters.
               </small>
-              <!-- <small class="form-text text-danger" *ngIf="regForm.controls.emailNew?.errors?.maxlength">
+              <!-- <small class="form-text text-danger" *ngIf="regForm.controls.email?.errors?.maxlength">
                 Your email cannot be longer than 20 characters.
               </small> -->
-              <small class="text-danger" *ngIf="!regForm.controls.emailNew?.errors?.minlength && regForm.controls.emailNew?.errors?.pattern">Invalid
+              <small class="text-danger" *ngIf="!regForm.controls.email?.errors?.minlength && regForm.controls.email?.errors?.pattern">Invalid
                 email</small>
 
             </div>
           </div>
           <!-- <div class="form-group">
-            <label for="email">Email</label>
-            <input #email="ngModel" pattern="^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$"  [class.is-invalid]="email.invalid && email.touched" [(ngModel)]="registerUserData.email" name="email" type="text" class="form-control rounded-0" required>
+            <label for="emailNew">Email Confirm</label>
+            <input #emailNew="ngModel" pattern="^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$"  [class.is-invalid]="emailNew.invalid && emailNew.touched" [ngModel]="" name="emailNew" type="text" class="form-control rounded-0" required>
            
-            <div *ngIf="email.errors && (email.invalid || email.touched)">
-              <small class="text-danger" *ngIf="email.errors.required && email.touched">This field is required</small>
-              <small class="text-danger" *ngIf="email.errors.pattern">Invalid email</small>
+            <div *ngIf="emailNew.errors && (emailNew.invalid || emailNew.touched)">
+              <small class="text-danger" *ngIf="emailNew.errors.required && emailNew.touched">This field is required</small>
+              <small class="text-danger" *ngIf="emailNew.errors.pattern">Invalid email</small>
             </div>
           </div> -->
           <div class="form-group">
@@ -60,7 +70,7 @@
               <option value="default">I am interested in</option>
               <option *ngFor="let topic of topics">{{ topic }}</option>
             </select>
-            <small class="text-danger" [class.d-none]="!topicHasError || topic.untouched">Please choose a topic</small>      
+            <small class="text-danger" [class.d-none]="!topicHasError || topic.untouched ">Please choose a topic</small>      
           </div>
       
           <div class="mb-3">
@@ -119,8 +129,8 @@
           </div>
       
           <div class="form-group">
-            <re-captcha [(ngModel)]="registerUserData.captcha" name="captcha" required #captchaControl="ngModel" ></re-captcha>
-            
+            <!-- <re-captcha [(ngModel)]="registerUserData.captcha" name="captcha" required #captchaControl="ngModel" ></re-captcha> -->
+             
             <!-- <div *ngIf=" (captchaControl.valid || captchaControl.pristine)">
               <small class="text-danger" *ngIf="cfmPassword.valid && (captchaControl.valid || captchaControl.pristine)">Captcha must be solved</small>
             </div> -->
@@ -140,7 +150,7 @@
     <h5 class="card-title">Form Status: {{regForm.Status}}</h5>
     <h6 class="card-subtitle mb-2 text-muted">Form Value</h6>
     <pre>{{regForm.value | json}}</pre>
-    <pre>{{captchaControl.className}} test</pre>
+    
   </div>
 </div>
 <br/>

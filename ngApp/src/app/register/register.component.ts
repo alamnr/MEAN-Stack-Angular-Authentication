@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../model/User';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-register',
@@ -14,11 +15,13 @@ export class RegisterComponent implements OnInit {
   passStrengthText: string;
   topics = ['Angular', 'React', 'Vue'];
   topicHasError = true;
+  
 
-  constructor() {
+  constructor(private authService: AuthService) {
     this.showPass = false;
     this.showPassConfirm = false;
     this.passStrengthText = '';
+    
    }
 
   ngOnInit() {
@@ -107,6 +110,7 @@ export class RegisterComponent implements OnInit {
   }*/
   registerUser(){
     console.log(this.registerUserData);
+    this.authService.registerUser(this.registerUserData).subscribe(res=>{console.log(res); },err=>{console.log('Error occured- ', err); });
   }
 
   onClickPass(status:boolean){

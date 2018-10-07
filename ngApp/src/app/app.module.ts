@@ -15,7 +15,8 @@ import { CompareValidatorDirective } from './shared/validator/compare-validator.
 
 import { RecaptchaModule, RECAPTCHA_SETTINGS, RecaptchaSettings } from 'ng-recaptcha';
 import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
-
+import {HttpClientModule} from '@angular/common/http'
+import { AuthService } from './auth.service';
 
 
 @NgModule({
@@ -35,9 +36,10 @@ import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
     AppRoutingModule,
     PasswordStrengthMeterModule,
     RecaptchaModule.forRoot(),
-    RecaptchaFormsModule
+    RecaptchaFormsModule,
+    HttpClientModule
   ],
-  providers: [PhoneNumberDirective, {provide:RECAPTCHA_SETTINGS,useValue:{siteKey:'6LdkynMUAAAAADCPROILreORmyF-l6ONR5O-wclB'} as RecaptchaSettings}],
+  providers: [AuthService,PhoneNumberDirective, {provide:RECAPTCHA_SETTINGS,useValue:{siteKey:'6LdkynMUAAAAADCPROILreORmyF-l6ONR5O-wclB'} as RecaptchaSettings}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
