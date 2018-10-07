@@ -1,3 +1,51 @@
-<p>
-  login works!
-</p>
+<div class="row pt-5">
+    <div class="col-md-6 mx-auto">
+      <div class="card rounded-0">
+        <div class="card-header">
+          <h3 class="mb-0">Login</h3>
+        </div>
+        <div class="card-body">
+          <form  class="form" #loginForm="ngForm">
+            
+            <div class="form-group">
+              <label for="">Email</label>
+              <input #email="ngModel" [(ngModel)]="loginUserData.email" pattern="^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$"
+                [class.is-invalid]="email.invalid && email.touched" name="email" type="email" class="form-control rounded-0"
+                required minlength="5" maxlength="20">
+  
+              <div *ngIf="loginForm.controls.email?.invalid && (loginForm.controls.email?.dirty  || email.touched)">
+                <small class="form-text text-danger" *ngIf="loginForm.controls.email?.errors?.required && email.touched">
+                  Your email is required.
+                </small>
+                <!-- <small class="form-text text-danger" *ngIf="regForm.controls.email?.errors?.invalid">
+                  Your email is invalid.
+                </small> -->
+                <small class="form-text text-danger" *ngIf="loginForm.controls.email?.errors?.minlength">
+                  Your email is required to be at least 5 characters.
+                </small>
+                <!-- <small class="form-text text-danger" *ngIf="regForm.controls.email?.errors?.maxlength">
+                  Your email cannot be longer than 20 characters.
+                </small> -->
+                <small class="text-danger" *ngIf="!loginForm.controls.email?.errors?.minlength && loginForm.controls.email?.errors?.pattern">Invalid
+                  email</small>
+  
+              </div>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input #password="ngModel" [(ngModel)]="loginUserData.password" [class.is-invalid]="password.invalid && password.touched"
+                  name="password" [type]="showPass?'text':'password'" class="form-control rounded-0" required>
+                <app-show-password (isShowPass)="onClickPass($event)"></app-show-password>
+                <div *ngIf="password.invalid && (password.dirty || password.touched)">
+                    <small class="text-danger" *ngIf="password.errors.required && password.touched">This field is required</small>
+                  </div>
+                
+              </div>
+              <button (click)="login()" type="button" class="btn btn-primary float-right" [disabled]="loginForm.form.invalid"> Login</button>
+            </form>
+    
+          </div>
+        </div>
+      </div>
+    </div>    
+  

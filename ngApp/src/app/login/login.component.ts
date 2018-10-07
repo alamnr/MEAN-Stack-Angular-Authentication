@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from '../model/User';
 
 @Component({
   selector: 'app-login',
@@ -7,9 +8,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  loginUserData= new User('','','','','',false,''); 
+  showPass : boolean;
+
+  constructor() {
+    this.showPass = false;
+   }
 
   ngOnInit() {
+  }
+
+  onClickPass(status:boolean){
+    this.showPass = status;
+  }
+
+  login(){
+    console.log(this.loginUserData);
   }
 
 }
