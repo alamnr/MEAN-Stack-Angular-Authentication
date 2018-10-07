@@ -8,10 +8,12 @@ import { User } from '../model/User';
 })
 export class RegisterComponent implements OnInit {
 
-  registerUserData= new User('','','',''); 
+  registerUserData= new User('','','','','',false,''); 
   showPass : boolean;
   showPassConfirm : boolean;
   passStrengthText: string;
+  topics = ['Angular', 'React', 'Vue'];
+  topicHasError = true;
 
   constructor() {
     this.showPass = false;
@@ -21,6 +23,14 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  validateTopic(value) {
+    if (value === 'default') {
+      this.topicHasError = true;
+    } else {
+      this.topicHasError = false;
+    }
+}
 
   receiveStrengthFromChildComponent(strengthChange:number, passText:string){
     const strength = {

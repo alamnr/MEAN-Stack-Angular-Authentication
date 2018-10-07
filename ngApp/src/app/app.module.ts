@@ -37,7 +37,7 @@ import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
     RecaptchaModule.forRoot(),
     RecaptchaFormsModule
   ],
-  providers: [PhoneNumberDirective, {provide:RECAPTCHA_SETTINGS,useValue:{siteKey:'6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'} as RecaptchaSettings}],
+  providers: [PhoneNumberDirective, {provide:RECAPTCHA_SETTINGS,useValue:{siteKey:'6LdkynMUAAAAADCPROILreORmyF-l6ONR5O-wclB'} as RecaptchaSettings}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
