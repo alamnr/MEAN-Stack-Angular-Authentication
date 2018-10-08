@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../model/User';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,7 @@ export class LoginComponent implements OnInit {
   loginUserData= new User('','','','','',false,''); 
   showPass : boolean;
 
-  constructor() {
+  constructor(private auth: AuthService) {
     this.showPass = false;
    }
 
@@ -24,6 +25,14 @@ export class LoginComponent implements OnInit {
 
   login(){
     console.log(this.loginUserData);
+    this.auth.loginUser(this.loginUserData).subscribe(
+      (res)=>{
+        console.log('Success-',res);
+      },
+      (err)=>{
+        console.log('Error-',err);
+      }
+    );
   }
 
 }
