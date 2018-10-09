@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const User = require('../models/user')
-
-const db = "mongodb://alamnr:alamnr5640@ds223253.mlab.com:23253/eventsdb"
+const User = require('../models/user');
+const jwt = require('jsonwebtoken');
+const db = "mongodb://alamnr:alamnr5640@ds223253.mlab.com:23253/eventsdb";
 
 
 mongoose.connect(db,err=>{
@@ -27,7 +27,10 @@ router.post('/register',(req,res)=>{
             console.log('Error Saving user: '+ error);
         }
         else{
-            res.status(200).send(registeredUser);
+            let payload  = {subject: registeredUser._id};
+            let token  = jwt.sign(payload,'secretKey');
+            //res.status(200).send(registeredUser);
+            res.status(200).send({token});
         }
     });
 })
@@ -45,7 +48,10 @@ router.post('/login', (req, res)=>{
                 if(user.password !== userData.password){
                     res.status(401).send('Invalid password');
                 }else{
-                    res.status(200).send(user);
+                    let payload  = {subject: user._id};
+                    let token  = jwt.sign(payload,'secretKey');
+                    //res.status(200).send(user);
+                    res.status(200).send({token});
                 }
             }
         }

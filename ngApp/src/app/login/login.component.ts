@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../model/User';
 import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,7 @@ export class LoginComponent implements OnInit {
   loginUserData= new User('','','','','',false,''); 
   showPass : boolean;
 
-  constructor(private auth: AuthService) {
+  constructor(private auth: AuthService, private router: Router) {
     this.showPass = false;
    }
 
@@ -27,10 +28,12 @@ export class LoginComponent implements OnInit {
     console.log(this.loginUserData);
     this.auth.loginUser(this.loginUserData).subscribe(
       (res)=>{
-        console.log('Success-',res);
+        console.log('@component Success-',res);
+        localStorage.setItem('token',res.token);
+        this.router.navigate(['/special']);
       },
       (err)=>{
-        console.log('Error-',err);
+        console.log('@component Error-',err);
       }
     );
   }

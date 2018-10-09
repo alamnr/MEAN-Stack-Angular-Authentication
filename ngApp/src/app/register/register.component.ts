@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../model/User';
 import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -17,7 +18,7 @@ export class RegisterComponent implements OnInit {
   topicHasError = true;
   
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private router: Router) {
     this.showPass = false;
     this.showPassConfirm = false;
     this.passStrengthText = '';
@@ -110,7 +111,13 @@ export class RegisterComponent implements OnInit {
   }*/
   registerUser(){
     console.log(this.registerUserData);
-    this.authService.registerUser(this.registerUserData).subscribe(res=>{console.log(res); },err=>{console.log('Error occured- ', err); });
+    this.authService.registerUser(this.registerUserData).subscribe(
+      res=>{
+        console.log('@component success-',res); 
+        localStorage.setItem('token',res.token);
+        this.router.navigate(['/special']);
+     },
+      err=>{console.log('@component Error occured- ', err); });
   }
 
   onClickPass(status:boolean){
