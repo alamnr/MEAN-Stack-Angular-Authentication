@@ -1,18 +1,49 @@
-
 <div class="row pt-5">
   <div class="col-md-6 mx-auto">
 
-   
+
     <div class="card rounded-0">
       <div class="card-header">
         <h3 class="mb-0">Register</h3>
       </div>
       <div class="card-body">
-        <form  class="form" #regForm="ngForm" (ngSubmit)="registerUser(); regForm.reset()">
+        <form class="form" #regForm="ngForm" (ngSubmit)="registerUser(); regForm.reset()">
           <!-- {{regForm.value | json}}
           <br/>
           {{registerUserData | json}} -->
-          
+          <div class="form-group">
+            <label for="">Name</label>
+            <input id="name" name="name" class="form-control" required minlength="2" appForbiddenName="bob" [(ngModel)]="registerUserData.name"
+              #name="ngModel">
+            <div *ngIf="regForm.controls.name?.invalid && (regForm.controls.name?.dirty  || name.touched)">
+              <small *ngIf="name.errors.required" class="form-text text-danger">
+                Name is required.
+              </small>
+              <small *ngIf="name.errors.minlength" class="form-text text-danger">
+                Name must be at least 2 characters long.
+              </small>
+              <small *ngIf="name.errors.forbiddenName" class="form-text text-danger">
+                Name cannot be Bob.
+              </small>
+            </div>
+
+          </div>
+
+          <div class="form-group">
+              <label for="alterEgo">Alter Ego</label>
+              <input id="alterEgo" class="form-control" name="alterEgo"
+                    #alterEgo="ngModel"
+                    [(ngModel)]="registerUserData.alterEgo"
+                    [ngModelOptions]="{ updateOn: 'blur' }"
+                    appUniqueAlterEgo>
+    
+              <div *ngIf="alterEgo.pending">Validating...</div>
+              <div *ngIf="alterEgo.invalid">
+                <small *ngIf="alterEgo.errors?.uniqueAlterEgo" class="form-text text-danger">
+                  Alter ego is already taken.
+                </small>
+              </div>
+            </div>
 
           <div class="form-group">
             <label for="">Email</label>
@@ -20,7 +51,7 @@
               [class.is-invalid]="email.invalid && email.touched" name="email" type="email" class="form-control rounded-0"
               required minlength="5" maxlength="20" placeholder="Enter email">
 
-            <div *ngIf="regForm.controls.email?.invalid && (regForm.controls.email?.dirty  || email.touched)" >
+            <div *ngIf="regForm.controls.email?.invalid && (regForm.controls.email?.dirty  || email.touched)">
               <small class="form-text text-danger" *ngIf="regForm.controls.email?.errors?.required && email.touched">
                 Your email is required.
               </small>
@@ -36,6 +67,10 @@
               <small class="text-danger" *ngIf="!regForm.controls.email?.errors?.minlength && regForm.controls.email?.errors?.pattern">Invalid
                 email</small>
 
+              <small *ngIf="email.errors.forbiddenName">
+                email cannot be Bob.
+              </small>
+
             </div>
           </div>
           <!-- <div class="form-group">
@@ -49,8 +84,8 @@
           </div> -->
           <div class="form-group">
             <label for="phone">Phone</label>
-            <input #phone="ngModel" [class.is-invalid]="phone.invalid && phone.touched" [(ngModel)]="registerUserData.phone" name="phone"
-              type="text" class="form-control rounded-0" jhiIsPhoneOnly required maxlength="15">
+            <input #phone="ngModel" [class.is-invalid]="phone.invalid && phone.touched" [(ngModel)]="registerUserData.phone"
+              name="phone" type="text" class="form-control rounded-0" jhiIsPhoneOnly required maxlength="15">
 
             <div *ngIf="phone.invalid && (phone.dirty || phone.touched)">
               <small class="text-danger" *ngIf="phone.errors.required && phone.touched">This field is required</small>
@@ -61,8 +96,7 @@
           <div class="form-group">
             <label for="eventDate">Event Date</label>
             <input #eventDate="ngModel" id="eventDate" [class.is-invalid]="eventDate.invalid && eventDate.touched"
-             [(ngModel)]="registerUserData.date" name="eventDate"
-              type="date" class="form-control rounded-0"  required >
+              [(ngModel)]="registerUserData.date" name="eventDate" type="date" class="form-control rounded-0" required>
 
             <div *ngIf="eventDate.invalid && (eventDate.dirty || eventDate.touched)">
               <small class="text-danger" *ngIf="eventDate.errors.required && eventDate.touched">This field is required</small>
@@ -72,27 +106,23 @@
 
           <div class="form-group">
             <label for="power">Power</label>
-            <select class="form-control" id="power"
-                    required
-                    [(ngModel)]="registerUserData.power" name="power"
-                    #power="ngModel">
+            <select class="form-control" id="power" required [(ngModel)]="registerUserData.power" name="power" #power="ngModel">
               <option *ngFor="let pow of powers" [value]="pow">{{pow}}</option>
             </select>
-            <div [hidden]="power.valid || power.pristine" >
+            <div [hidden]="power.valid || power.pristine">
               Power is required
             </div>
           </div>
           <div class="form-group">
             <label for="interest">Interested in </label>
-            <select class="form-control" id="interest" (blur)="validateTopic(topic.value)"
-             (change)="validateTopic(topic.value)" #topic="ngModel" [class.is-invalid]="topicHasError && topic.touched" 
-             name="topic" [(ngModel)]="registerUserData.topic">
+            <select class="form-control" id="interest" (blur)="validateTopic(topic.value)" (change)="validateTopic(topic.value)"
+              #topic="ngModel" [class.is-invalid]="topicHasError && topic.touched" name="topic" [(ngModel)]="registerUserData.topic">
               <option value="default">I am interested in</option>
               <option *ngFor="let topic of topics">{{ topic }}</option>
             </select>
-            <small class="text-danger" [class.d-none]="!topicHasError || topic.untouched ">Please choose a topic</small>      
+            <small class="text-danger" [class.d-none]="!topicHasError || topic.untouched ">Please choose a topic</small>
           </div>
-      
+
           <div class="mb-3">
             <label>Time preference</label>
             <div class="form-check">
@@ -104,7 +134,7 @@
               <label class="form-check-label">Evening (5PM - 8PM)</label>
             </div>
           </div>
-      
+
           <div class="form-check mb-3">
             <input class="form-check-input" type="checkbox" name="subscribe" [(ngModel)]="registerUserData.subscribe">
             <label class="form-check-label">
@@ -118,44 +148,46 @@
               name="password" id="password" [type]="showPass?'text':'password'" class="form-control rounded-0" required>
             <app-show-password (isShowPass)="onClickPass($event)"></app-show-password>
             <div *ngIf="password.invalid && (password.dirty || password.touched)">
-                <small class="text-danger" *ngIf="password.errors.required && password.touched">This field is required</small>
-              </div>
+              <small class="text-danger" *ngIf="password.errors.required && password.touched">This field is required</small>
+            </div>
             <div class="row">
               <div class="col-md-12">
-                  <small>Password strength:</small> &nbsp;<span><small>{{passStrengthText}}</small></span>
+                <small>Password strength:</small> &nbsp;<span><small>{{passStrengthText}}</small></span>
                 <password-strength-meter [password]="password.value" (strengthChange)="receiveStrengthFromChildComponent($event,password.value)"></password-strength-meter>
                 <!-- https://www.npmjs.com/package/angular-password-strength-meter -->
               </div>
-              
+
             </div>
 
 
-           
+
           </div>
 
           <div class="form-group">
             <label for="cfmPassword">Confirm Password</label>
-            <input #cfmPassword="ngModel" [ngModel]="" [class.is-invalid]="cfmPassword.invalid && cfmPassword.touched" name="cfmPassword"
-              type="password" class="form-control rounded-0" [type]="showPassConfirm?'text':'password'" compare="password"
-              required>
+            <input #cfmPassword="ngModel" [ngModel]="" [class.is-invalid]="cfmPassword.invalid && cfmPassword.touched"
+              name="cfmPassword" type="password" class="form-control rounded-0" [type]="showPassConfirm?'text':'password'"
+              compare="password" required>
             <app-show-password (isShowPass)="onClickPassConfirm($event)"></app-show-password>
 
             <div *ngIf="cfmPassword.invalid && (cfmPassword.dirty || cfmPassword.touched)">
-              <small class="text-danger" *ngIf="cfmPassword.errors.required && cfmPassword.touched">This field is required
+              <small class="text-danger" *ngIf="cfmPassword.errors.required && cfmPassword.touched">This field is
+                required
               </small>
               <!-- <small class="text-danger" *ngIf="cfmPassword.errors.required && cfmPassword.errors.compare">Pasword confirm do not match</small> -->
               <small class="text-danger" *ngIf="cfmPassword.errors.compare">Pasword confirm do not match</small>
             </div>
           </div>
-      
+
           <div class="form-group">
             <!-- <re-captcha [(ngModel)]="registerUserData.captcha" name="captcha" required #captchaControl="ngModel" ></re-captcha> -->
-             
+
             <!-- <div *ngIf=" (captchaControl.valid || captchaControl.pristine)">
               <small class="text-danger" *ngIf="cfmPassword.valid && (captchaControl.valid || captchaControl.pristine)">Captcha must be solved</small>
             </div> -->
           </div>
-          <button  type="submit" class="btn btn-primary float-right" [disabled]="regForm.form.invalid || topicHasError" > Register</button>
+          <button type="submit" class="btn btn-primary float-right" [disabled]="regForm.form.invalid || topicHasError">
+            Register</button>
         </form>
 
       </div>
@@ -163,14 +195,14 @@
   </div>
 </div>
 
-<br/>
+<br />
 <div class="card">
 
   <div class="card-body">
     <h5 class="card-title">Form Status: {{regForm.Status}}</h5>
     <h6 class="card-subtitle mb-2 text-muted">Form Value</h6>
     <pre>{{regForm.value | json}}</pre>
-    
+
   </div>
 </div>
-<br/>
+<br />

@@ -8,6 +8,8 @@ export class User {
         public subscribe: boolean,
         public captcha: string,
         public power?: string,
-        public date?:string
+        public date?:string,
+        public name?:string,
+        public alterEgo?:string
     ) { }
 }

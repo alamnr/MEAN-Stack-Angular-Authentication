@@ -19,6 +19,9 @@ import {HttpClientModule, HTTP_INTERCEPTORS,} from '@angular/common/http'
 import { AuthService } from './auth.service';
 import { AuthGuard } from './auth.guard';
 import { TokenInterceptorService } from './token-interceptor.service';
+import { ForbiddenValidatorDirective } from './shared/validator/forbidden-name-validator.directive';
+import { UniqueAlterEgoValidatorDirective } from './shared/validator/alter-ego.directive';
+
 
 
 
@@ -31,7 +34,9 @@ import { TokenInterceptorService } from './token-interceptor.service';
     SpecialEventsComponent,
     ShowPasswordComponent,
     PhoneNumberDirective,
-    CompareValidatorDirective
+    CompareValidatorDirective,
+    ForbiddenValidatorDirective,
+    UniqueAlterEgoValidatorDirective
   ],
   imports: [
     BrowserModule,
