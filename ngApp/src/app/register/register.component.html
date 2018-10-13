@@ -8,7 +8,7 @@
         <h3 class="mb-0">Register</h3>
       </div>
       <div class="card-body">
-        <form  class="form" #regForm="ngForm">
+        <form  class="form" #regForm="ngForm" (ngSubmit)="registerUser()">
           <!-- {{regForm.value | json}}
           <br/>
           {{registerUserData | json}} -->
@@ -88,7 +88,7 @@
           <div class="form-group">
             <label for="password">Password</label>
             <input #password="ngModel" [(ngModel)]="registerUserData.password" [class.is-invalid]="password.invalid && password.touched"
-              name="password" [type]="showPass?'text':'password'" class="form-control rounded-0" required>
+              name="password" id="password" [type]="showPass?'text':'password'" class="form-control rounded-0" required>
             <app-show-password (isShowPass)="onClickPass($event)"></app-show-password>
             <div *ngIf="password.invalid && (password.dirty || password.touched)">
                 <small class="text-danger" *ngIf="password.errors.required && password.touched">This field is required</small>
@@ -128,7 +128,7 @@
               <small class="text-danger" *ngIf="cfmPassword.valid && (captchaControl.valid || captchaControl.pristine)">Captcha must be solved</small>
             </div> -->
           </div>
-          <button (click)="registerUser()" type="button" class="btn btn-primary float-right" [disabled]="regForm.form.invalid || topicHasError"> Register</button>
+          <button  type="submit" class="btn btn-primary float-right" [disabled]="regForm.form.invalid || topicHasError" > Register</button>
         </form>
 
       </div>

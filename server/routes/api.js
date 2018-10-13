@@ -15,6 +15,22 @@ mongoose.connect(db,err=>{
     }
 });
 
+function verifyToken(req,res,next)
+{
+    if(!req.headers.authorization){
+        return res.status(401).send('Unauthorie request');
+    }
+    let token = req.headers.authorization.split(' ')[1];
+    if(token === null){
+        return res.status(401).send('Unauthorie request');
+    }
+    let payload = jwt.verify(token, 'secretKey');
+    if(!payload){
+        res.status(401).send('Unauthorise request');
+    }
+    req.userId = payload.subject;
+    next();
+}
 router.get('/',(req,res)=>{
     res.send('From API Route');
 });
@@ -88,7 +104,7 @@ router.get('/events',(req,res)=>{
     res.json(events);
 })
 
-router.get('/special', (req,res)=>{
+router.get('/special',verifyToken, (req,res)=>{
     let events =[{
         "_id":"2",
         "name":"Auto Expo",
