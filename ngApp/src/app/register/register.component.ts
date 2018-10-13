@@ -16,7 +16,9 @@ export class RegisterComponent implements OnInit {
   passStrengthText: string;
   topics = ['Angular', 'React', 'Vue'];
   topicHasError = true;
-  
+  powers = ['Really Smart', 'Super Flexible',
+            'Super Hot', 'Weather Changer'];
+
 
   constructor(private authService: AuthService, private router: Router) {
     this.showPass = false;

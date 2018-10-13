@@ -6,6 +6,8 @@ export class User {
         public topic: string,
         public timePreference: string,
         public subscribe: boolean,
-        public captcha: string
+        public captcha: string,
+        public power?: string,
+        public date?:string
     ) { }
 }

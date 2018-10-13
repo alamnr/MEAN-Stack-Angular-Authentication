@@ -8,17 +8,19 @@
         <h3 class="mb-0">Register</h3>
       </div>
       <div class="card-body">
-        <form  class="form" #regForm="ngForm" (ngSubmit)="registerUser()">
+        <form  class="form" #regForm="ngForm" (ngSubmit)="registerUser(); regForm.reset()">
           <!-- {{regForm.value | json}}
           <br/>
           {{registerUserData | json}} -->
+          
+
           <div class="form-group">
             <label for="">Email</label>
             <input #email="ngModel" [(ngModel)]="registerUserData.email" pattern="^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$"
               [class.is-invalid]="email.invalid && email.touched" name="email" type="email" class="form-control rounded-0"
-              required minlength="5" maxlength="20">
+              required minlength="5" maxlength="20" placeholder="Enter email">
 
-            <div *ngIf="regForm.controls.email?.invalid && (regForm.controls.email?.dirty  || email.touched)">
+            <div *ngIf="regForm.controls.email?.invalid && (regForm.controls.email?.dirty  || email.touched)" >
               <small class="form-text text-danger" *ngIf="regForm.controls.email?.errors?.required && email.touched">
                 Your email is required.
               </small>
@@ -56,10 +58,35 @@
             </div>
           </div>
 
-         
           <div class="form-group">
-            <label>Interested in </label>
-            <select class="custom-select" (blur)="validateTopic(topic.value)" (change)="validateTopic(topic.value)" #topic="ngModel" [class.is-invalid]="topicHasError && topic.touched" name="topic" [(ngModel)]="registerUserData.topic">
+            <label for="eventDate">Event Date</label>
+            <input #eventDate="ngModel" id="eventDate" [class.is-invalid]="eventDate.invalid && eventDate.touched"
+             [(ngModel)]="registerUserData.date" name="eventDate"
+              type="date" class="form-control rounded-0"  required >
+
+            <div *ngIf="eventDate.invalid && (eventDate.dirty || eventDate.touched)">
+              <small class="text-danger" *ngIf="eventDate.errors.required && eventDate.touched">This field is required</small>
+              <!-- <small class="text-danger" *ngIf="phone.errors.pattern">Invalid phone</small> -->
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="power">Power</label>
+            <select class="form-control" id="power"
+                    required
+                    [(ngModel)]="registerUserData.power" name="power"
+                    #power="ngModel">
+              <option *ngFor="let pow of powers" [value]="pow">{{pow}}</option>
+            </select>
+            <div [hidden]="power.valid || power.pristine" >
+              Power is required
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="interest">Interested in </label>
+            <select class="form-control" id="interest" (blur)="validateTopic(topic.value)"
+             (change)="validateTopic(topic.value)" #topic="ngModel" [class.is-invalid]="topicHasError && topic.touched" 
+             name="topic" [(ngModel)]="registerUserData.topic">
               <option value="default">I am interested in</option>
               <option *ngFor="let topic of topics">{{ topic }}</option>
             </select>
