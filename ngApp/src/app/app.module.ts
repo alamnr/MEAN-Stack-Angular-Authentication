@@ -21,6 +21,8 @@ import { AuthGuard } from './auth.guard';
 import { TokenInterceptorService } from './token-interceptor.service';
 import { ForbiddenValidatorDirective } from './shared/validator/forbidden-name-validator.directive';
 import { UniqueAlterEgoValidatorDirective } from './shared/validator/alter-ego.directive';
+import { RegisterGuard } from './register.guard';
+import { UnauthorizeComponent } from './unauthorize/unauthorize.component';
 
 
 
@@ -36,7 +38,8 @@ import { UniqueAlterEgoValidatorDirective } from './shared/validator/alter-ego.d
     PhoneNumberDirective,
     CompareValidatorDirective,
     ForbiddenValidatorDirective,
-    UniqueAlterEgoValidatorDirective
+    UniqueAlterEgoValidatorDirective,
+    UnauthorizeComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +50,7 @@ import { UniqueAlterEgoValidatorDirective } from './shared/validator/alter-ego.d
     RecaptchaFormsModule,
     HttpClientModule
   ],
-  providers: [{provide:HTTP_INTERCEPTORS,useClass:TokenInterceptorService,multi:true},AuthGuard,AuthService,PhoneNumberDirective, {provide:RECAPTCHA_SETTINGS,useValue:{siteKey:'6LdkynMUAAAAADCPROILreORmyF-l6ONR5O-wclB'} as RecaptchaSettings}],
+  providers: [{provide:HTTP_INTERCEPTORS,useClass:TokenInterceptorService,multi:true},AuthGuard,RegisterGuard,AuthService,PhoneNumberDirective, {provide:RECAPTCHA_SETTINGS,useValue:{siteKey:'6LdkynMUAAAAADCPROILreORmyF-l6ONR5O-wclB'} as RecaptchaSettings}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
