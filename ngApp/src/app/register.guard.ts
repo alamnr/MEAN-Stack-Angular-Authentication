@@ -15,7 +15,7 @@ export class RegisterGuard implements CanActivate {
   canActivate(): boolean {
     console.log(this.router.url);
     if(this.authService.loggedIn()){
-      this.router.navigate(['/unauthorize']);
+      this.router.navigate(['/unauthorize'],{queryParams:{code:'401'}});
       return false;
     }
     else{
