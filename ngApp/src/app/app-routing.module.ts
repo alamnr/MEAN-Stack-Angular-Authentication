@@ -5,6 +5,8 @@ import { SpecialEventsComponent } from './special-events/special-events.componen
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthGuard } from './auth.guard';
+import { RegisterGuard } from './register.guard';
+import { UnauthorizeComponent } from './unauthorize/unauthorize.component';
 
 
 const routes: Routes = [
@@ -28,8 +30,12 @@ const routes: Routes = [
     },
     {
         path:'register',
-        component:RegisterComponent
-       // canActivate: []
+        component:RegisterComponent,
+        canActivate: [RegisterGuard]
+    },
+    {
+        path:'unauthorize',
+        component:UnauthorizeComponent
     }
 ];
 
